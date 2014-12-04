@@ -1,0 +1,20 @@
+{
+  "name": "csc4402",
+  "version": "0.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [
+    "database",
+    "algorithms",
+    "functional",
+    "dependency"
+  ],
+  "author": "Selby Kendrick",
+  "license": "MIT",
+  "dependencies": {
+    "underscore": "~1.7.0"
+  }
+}
