@@ -14,8 +14,23 @@ Feel free to check your work or to use this code professionally, it is available
 
 There are definitely improvements that can be made with my implementation, and contributions are very welcome.
 
-Output as of commit 4034bec41c8666682569a331311c713cc05537d0
+Todo
+---
+* ~~Calculate closure of keys~~
+* ~~Generate combinations of relation attributes~~
+* ~~Use combinations to generate the closure given a relation and set of functional dependencies~~
+* ~~Calculate minimal cover given a relation and set of functional dependencies~~
+* ~~Calculate candidate keys given a relation and set of functional dependencies~~
+* Berstein Algorithm to calculate 3rd normal form given a relation and set of functional dependencies
+* BCNF Algorithm to calculate Boyce-Codd normal form given a relation and set of functional dependencies
+* Add comments before I forget what things do, rename things sanely & consistently, and clean up redundant logic
+* Actually use underscore?
+* Find a good way to organize code into separate files
+* Find a good way to do unit testing
+* npm package?
 
+Output
+---
 ```sh
 Hello, World
 Hello, World
