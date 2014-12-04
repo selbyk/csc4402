@@ -14,7 +14,7 @@ Feel free to check your work or to use this code professionally, it is avaliable
 
 There are definitely improvements that can be made, and contributions are very welcome.
 
-Output as of commit a1a87473a201a0186d929ebb8d2e9e9fbb0f8666
+Output as of commit 4034bec41c8666682569a331311c713cc05537d0
 
 ```sh
 Hello, World
@@ -77,5 +77,15 @@ OK: Test passed
   [ [ 'D' ], [ 'H' ] ],
   [ [ 'A' ], [ 'C' ] ],
   [ [ 'B' ], [ 'D' ] ] ]
+Testing candidate keys...
+CK:
+ERROR: Test failed
+[ [ 'A', 'B', 'C', 'D', 'E' ],
+  [ 'A', 'B', 'C', 'D', 'G' ],
+  [ 'A', 'B', 'C', 'E', 'G' ],
+  [ 'A', 'B', 'D', 'E', 'G' ],
+  [ 'A', 'C', 'D', 'E', 'G' ],
+  [ 'B', 'C', 'D', 'E', 'G' ],
+  [ 'A', 'B', 'C', 'D', 'E', 'G' ] ]
 
 ```
