@@ -10,9 +10,9 @@ The pseudo code for the algorithms used can be found in Dr. Jianhua Chen's lectu
 * [http://csc.lsu.edu/~jianhua/fd_slide2_09.pdf](http://csc.lsu.edu/~jianhua/fd_slide2_09.pdf)
 
 
-Feel free to check your work or to use this code professionally, it is avaliable under the MIT license.
+Feel free to check your work or to use this code professionally, it is available under the MIT license.
 
-There are definitely improvements that can be made, and contributions are very welcome.
+There are definitely improvements that can be made with my implementation, and contributions are very welcome.
 
 Output as of commit 4034bec41c8666682569a331311c713cc05537d0
 
