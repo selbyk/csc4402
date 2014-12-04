@@ -50,7 +50,7 @@ Array.prototype.proper_subset = function (array) {
 }
 
 // attach the .equals method to Array's prototype to call it on any array
-Array.prototype.proper_subset = function (array) {
+Array.prototype.subset = function (array) {
     // if the other array is a falsy value, return
     if (!array)
         return false;
@@ -275,7 +275,7 @@ var remove_redundant_fds = function(a_keys, kva_fds){
       X = fd[0]
       attrs = []
     }
-    console.log(attrs);
+    //console.log(attrs);
     var redundant = false;
     for(i=0;i<attrs.length;++i){
       for(j=0;j<fm.length;++j){
@@ -296,6 +296,27 @@ var remove_redundant_fds = function(a_keys, kva_fds){
 
 var minimal_cover = function(a_keys, kva_fds){
   return remove_redundant_fds(a_keys, kva_fds)
+}
+
+var candidate_keys_of = function(a_keys, kva_fds){
+  var possible_keys = combinations(a_keys);
+  var candidate_keys = [];
+  while(possible_keys.length > 0){
+    var possible_key = possible_keys.shift();
+    var possible_key_closure = closure_of(possible_key, kva_fds);
+    var tmp_cks = [];
+    //console.log(closure_of(possible_key, kva_fds));
+    if(possible_key_closure.equals(a_keys))
+
+      candidate_keys.forEach(function(ck){
+        if(possible_key.subset(ck) == false)
+          tmp_cks.push(ck)
+
+      })
+      tmp_cks.push(possible_key)
+      candidate_keys = tmp_cks
+  }
+  return candidate_keys;
 }
 
 /*
@@ -344,15 +365,15 @@ var expected_closure = [
   [['A', 'B', 'C'], ['A', 'B', 'C']]
 ];
 
-var closure_calculation = fd_closure(X, F);
-
-test_output(closure_calculation, expected_closure);
 console.log('X:');
 console.log(X);
 console.log('F:');
 console.log(F);
+console.log('Testing closure calculations...');
+var closure_calculated = fd_closure(X, F);
+test_output(closure_calculated, expected_closure);
 console.log('F+:');
-console.log(closure_calculation);
+console.log(closure_calculated);
 
 // Test min covers
 /*
@@ -427,6 +448,13 @@ console.log('Testing min-cover part 3...');
 console.log('F` (3/3):');
 test_output(min_cover_calculated, expected_min_cover);
 console.log(min_cover_calculated);
+
+
+var candidate_keys = candidate_keys_of(X, F);
+console.log('Testing candidate keys...');
+console.log('CK:');
+test_output(candidate_keys, expected_min_cover);
+console.log(candidate_keys);
 
 
 /*Eliminate redundancy in the left hand side.The fd CD→Aisreplaced by C
