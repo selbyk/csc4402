@@ -298,26 +298,6 @@ var minimal_cover = function(a_keys, kva_fds){
   return remove_redundant_fds(a_keys, kva_fds)
 }
 
-var candidate_keys_of = function(a_keys, kva_fds){
-  var possible_keys = combinations(a_keys);
-  //console.log(possible_keys)
-  var candidate_keys = [];
-  while(possible_keys.length > 0){
-    var possible_key = possible_keys.shift();
-    var possible_key_closure = closure_of(possible_key, kva_fds);
-    var tmp_cks = [];
-    //console.log(closure_of(possible_key, kva_fds));
-    if(possible_key_closure.equals(a_keys))
-      candidate_keys.forEach(function(ck){
-        if(ck.subset(possible_key) == false)
-          tmp_cks.push(ck)
-      })
-      tmp_cks.push(possible_key)
-      candidate_keys = tmp_cks
-  }
-  return candidate_keys;
-}
-
 var necessary_keys_of = function(a_keys, kva_fds){
   var necessary_keys = [];
   a_keys.forEach(function(key){
@@ -366,6 +346,39 @@ var middle_ground_keys_of = function(a_keys, kva_fds){
       middle_ground_keys.push(key)
   })
   return middle_ground_keys;
+}
+
+var candidate_keys_of = function(a_keys, kva_fds){
+  //console.log(possible_keys)
+  var candidate_keys = [];
+  var necessary_keys = necessary_keys_of(a_keys, kva_fds);
+  //console.log(necessary_keys);
+  var useless_keys = useless_keys_of(a_keys, kva_fds);
+  var middle_ground_keys = middle_ground_keys_of(a_keys, kva_fds);
+  var possible_keys = function(){
+    var tmp_keys = combinations(middle_ground_keys);
+    var possible = [];
+    tmp_keys.forEach(function(a_keys){
+      possible.push(a_keys.concat(necessary_keys));
+    })
+    return possible;
+  }();
+  //console.log(possible_keys);
+  while(possible_keys.length > 0){
+    var possible_key = possible_keys.shift();
+    var possible_key_closure = closure_of(possible_key, kva_fds);
+    var tmp_cks = [];
+    //console.log(closure_of(possible_key, kva_fds));
+    if(possible_key_closure.equals(a_keys)){
+      possible_keys.forEach(function(ck){
+        if(ck.subset(possible_key) == false)
+          tmp_cks.push(ck)
+      })
+      candidate_keys.push(possible_key)
+      possible_keys = tmp_cks
+    }
+  }
+  return candidate_keys;
 }
 
 /*
@@ -582,7 +595,7 @@ var expected_candidate_keys = [
 var candidate_keys = candidate_keys_of(X, F);
 console.log('Testing candidate keys...');
 console.log('CK:');
-test_output(candidate_keys, expected_min_cover);
+test_output(candidate_keys, expected_candidate_keys);
 console.log(candidate_keys);
 
 
