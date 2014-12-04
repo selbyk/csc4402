@@ -318,6 +318,56 @@ var candidate_keys_of = function(a_keys, kva_fds){
   return candidate_keys;
 }
 
+var necessary_keys_of = function(a_keys, kva_fds){
+  var necessary_keys = [];
+  a_keys.forEach(function(key){
+    var in_lhs = false;
+    var in_rhs = false;
+    kva_fds.forEach(function(fd){
+      if(in_lhs === false)
+        if(fd[0].indexOf(key) != -1)
+          in_lhs = true;
+      if(in_rhs === false)
+        if(fd[1].indexOf(key) != -1)
+          in_rhs = true;
+    })
+    if(in_lhs && !in_rhs || !in_lhs && !in_rhs)
+      necessary_keys.push(key)
+  })
+  return necessary_keys;
+}
+
+var useless_keys_of = function(a_keys, kva_fds){
+  var useless_keys = [];
+  a_keys.forEach(function(key){
+    var in_lhs = false;
+    var in_rhs = false;
+    kva_fds.forEach(function(fd){
+      if(in_lhs === false)
+        if(fd[0].indexOf(key) != -1)
+          in_lhs = true;
+      if(in_rhs === false)
+        if(fd[1].indexOf(key) != -1)
+          in_rhs = true;
+    })
+    if(!in_lhs && in_rhs)
+      useless_keys.push(key)
+  })
+  return useless_keys;
+}
+
+var middle_ground_keys_of = function(a_keys, kva_fds){
+  var middle_ground_keys = [];
+  var necessary_keys = necessary_keys_of(a_keys, kva_fds);
+  var useless_keys = useless_keys_of(a_keys, kva_fds);
+  var middle_ground_test_array = necessary_keys + useless_keys;
+  a_keys.forEach(function(key){
+    if(middle_ground_test_array.indexOf(key) == -1)
+      middle_ground_keys.push(key)
+  })
+  return middle_ground_keys;
+}
+
 /*
   Functional Dependencies
   AB → C
@@ -448,6 +498,56 @@ console.log('F` (3/3):');
 test_output(min_cover_calculated, expected_min_cover);
 console.log(min_cover_calculated);
 
+/* Lecutre notes:
+Consider the relation R(ABCDEG) with set of fd’
+sF = {AB→C,C→D, AD→E}
+*/
+
+
+// Set of attributes
+var X = ['A','B','C','D','E','G'];
+
+// Set of functional dependencies
+var F = [
+  [['A', 'B'], ['C']],
+  [['C'], ['D']],
+  [['A', 'D'], ['E']]
+];
+
+var expected_necessary_keys = ['A','B','G'];
+
+var expected_useless_keys = ['E'];
+
+var expected_middle_ground_keys = ['C','D'];
+
+
+console.log('X:');
+console.log(X);
+console.log('F:');
+console.log(F);
+
+console.log('Testing necessary keys...');
+var necessary_keys = necessary_keys_of(X, F);
+
+console.log('NKs:');
+test_output(necessary_keys, expected_necessary_keys);
+console.log(necessary_keys);
+
+console.log('Testing useless keys...');
+var useless_keys = useless_keys_of(X, F);
+
+console.log('UKs:');
+test_output(useless_keys, expected_useless_keys);
+console.log(useless_keys);
+
+console.log('Testing middle ground keys...');
+var middle_ground_keys = middle_ground_keys_of(X, F);
+
+console.log('MGKs:');
+test_output(middle_ground_keys, expected_middle_ground_keys);
+console.log(middle_ground_keys);
+
+
 /*
 Lecture notes:
 Example. (Computing all candidate k
@@ -457,6 +557,7 @@ Let R = R(ABCDEG) and F = {AB→CD, A→B, B→C, C→E, BD→A}.
 CKs:
 {AG, BDG}
 */
+
 
 // Set of attributes
 var X = ['A','B','C','D','E','G'];
@@ -469,6 +570,8 @@ var F = [
   [['C'], ['E']],
   [['B', 'D'], ['A']]
 ];
+
+
 
 var expected_candidate_keys = [
   ['A', 'G'],
