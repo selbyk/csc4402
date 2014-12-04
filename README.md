@@ -22,13 +22,14 @@ Hello, World
 Hello, World
 Hello, World
 Hello, World
-OK: Test passed
 X:
 [ 'A', 'B', 'C' ]
 F:
 [ [ [ 'A', 'B' ], [ 'C' ] ],
   [ [ 'C' ], [ 'B' ] ],
   [ [ 'C' ], [ 'A' ] ] ]
+Testing closure calculations...
+OK: Test passed
 F+:
 [ [ [ 'A' ], [ 'A' ] ],
   [ [ 'B' ], [ 'B' ] ],
@@ -67,13 +68,6 @@ OK: Test passed
   [ [ 'D' ], [ 'H' ] ],
   [ [ 'A' ], [ 'C' ] ],
   [ [ 'B' ], [ 'D' ] ] ]
-[]
-[ 'A' ]
-[ 'A', 'B' ]
-[]
-[ 'E' ]
-[]
-[]
 Testing min-cover part 3...
 F` (3/3):
 OK: Test passed
