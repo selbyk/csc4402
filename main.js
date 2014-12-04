@@ -300,6 +300,7 @@ var minimal_cover = function(a_keys, kva_fds){
 
 var candidate_keys_of = function(a_keys, kva_fds){
   var possible_keys = combinations(a_keys);
+  //console.log(possible_keys)
   var candidate_keys = [];
   while(possible_keys.length > 0){
     var possible_key = possible_keys.shift();
@@ -307,11 +308,9 @@ var candidate_keys_of = function(a_keys, kva_fds){
     var tmp_cks = [];
     //console.log(closure_of(possible_key, kva_fds));
     if(possible_key_closure.equals(a_keys))
-
       candidate_keys.forEach(function(ck){
-        if(possible_key.subset(ck) == false)
+        if(ck.subset(possible_key) == false)
           tmp_cks.push(ck)
-
       })
       tmp_cks.push(possible_key)
       candidate_keys = tmp_cks
@@ -448,6 +447,33 @@ console.log('Testing min-cover part 3...');
 console.log('F` (3/3):');
 test_output(min_cover_calculated, expected_min_cover);
 console.log(min_cover_calculated);
+
+/*
+Lecture notes:
+Example. (Computing all candidate k
+eys of R.)
+Let R = R(ABCDEG) and F = {AB→CD, A→B, B→C, C→E, BD→A}.
+
+CKs:
+{AG, BDG}
+*/
+
+// Set of attributes
+var X = ['A','B','C','D','E','G'];
+
+// Set of functional dependencies
+var F = [
+  [['A', 'B'], ['C', 'D']],
+  [['A'], ['B']],
+  [['B'], ['C']],
+  [['C'], ['E']],
+  [['B', 'D'], ['A']]
+];
+
+var expected_candidate_keys = [
+  ['A', 'G'],
+  ['B', 'D', 'G']
+];
 
 
 var candidate_keys = candidate_keys_of(X, F);
