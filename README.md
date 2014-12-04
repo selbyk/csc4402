@@ -122,6 +122,18 @@ Testing candidate keys...
 CK:
 OK: Test passed
 [ [ 'A', 'G' ], [ 'B', 'D', 'G' ] ]
-
+X:
+[ 'A', 'B', 'C', 'D', 'E' ]
+F:
+[ [ [ 'A' ], [ 'B' ] ],
+  [ [ 'A' ], [ 'C' ] ],
+  [ [ 'C' ], [ 'A' ] ],
+  [ [ 'B', 'D' ], [ 'E' ] ] ]
+Testing bernstein step one...
+bernstein_one:
+OK: Test passed
+[ [ [ 'A' ], [ 'B', 'C' ] ],
+  [ [ 'C' ], [ 'A' ] ],
+  [ [ 'B', 'D' ], [ 'E' ] ] ]
 
 ```

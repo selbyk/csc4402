@@ -67,6 +67,21 @@ Array.prototype.subset = function (array) {
     return true;
 }
 
+// attach the .equals method to Array's prototype to call it on any array
+Array.prototype.merge = function (that) {
+    var this_index = 0;
+    var that_index = 0;
+    var this_and_that = [].concat(this);
+    that.forEach(function(element){
+      if(this_and_that.indexOf(element) == -1)
+        this_and_that.push(element)
+    })
+    //while(this_index < this.length || that_index < that.length){
+    //
+    //}
+    return this_and_that;
+}
+
 /*
 Your previous Plain Text content is preserved below:
 
@@ -381,6 +396,42 @@ var candidate_keys_of = function(a_keys, kva_fds){
   return candidate_keys;
 }
 
+/**
+ * Bernstein's Algorithm
+ *
+ */
+
+ /*
+   From course:
+   Group together all fd's which have the same L.H.S. If X → Y1, X → Y2, ...,
+   X → Yk are all the fd's with the SAME L.H.S. X, then replace all of them
+   by the single fd X → Y1, Y2, ...Yk.
+ */
+ var combine_lhs = function(kva_fds){
+   var new_fds = []
+   var tmp_fds = kva_fds
+   kva_fds.forEach(function(fd){
+     var already_exists = false
+     for(i=0;i<new_fds.length;++i){
+       if(new_fds[i][0].equals(fd[0])){
+         already_exists = true
+         break
+       }
+     }
+     if(already_exists === false){
+       new_fd_key = fd[0];
+       new_fd_attrs = [];
+       kva_fds.forEach(function(deeper_fd){
+         if(new_fd_key.equals(deeper_fd[0])){
+           new_fd_attrs = new_fd_attrs.concat(deeper_fd[1])
+         }
+       })
+       new_fds.push([new_fd_key,new_fd_attrs])
+     }
+   })
+   return new_fds
+ }
+
 /*
   Functional Dependencies
   AB → C
@@ -584,13 +635,15 @@ var F = [
   [['B', 'D'], ['A']]
 ];
 
-
-
 var expected_candidate_keys = [
   ['A', 'G'],
   ['B', 'D', 'G']
 ];
 
+console.log('X:');
+console.log(X);
+console.log('F:');
+console.log(F);
 
 var candidate_keys = candidate_keys_of(X, F);
 console.log('Testing candidate keys...');
@@ -605,3 +658,45 @@ A∈F′,bytransitivity,wehav eC→A∈(F′)+and henceCD→Ashould be replaced 
 A. Similarly,CD→Bis replaced by C→B, AE→Cisreplaced by A→C. F′=
 {C→A, C→B, C→D, D→E, D→H, A→C, B→D}after step (2).
 */
+
+/**
+ * Tests for Bernstein's Algorithm
+ */
+/*
+ Example from lecture slides
+This e
+xample sho
+ws the need for steps 1, 3 and 4.GivenR(ABCDE) and F = {A→B, A→C, C→A, BD→E}.
+Step 1.{A→BC, C→A, BD→E}.
+Step 2.R1(ABC),R2(CA),R3(BDE)
+Step 3.R1(ABC),R3(BDE)
+Step 4.R1(ABC),R3(BDE) and R4(AD)
+*/
+
+ // Set of attributes
+ var X = ['A','B','C','D','E'];
+
+ // Set of functional dependencies
+ var F = [
+    [['A'], ['B']],
+    [['A'], ['C']],
+    [['C'], ['A']],
+    [['B', 'D'], ['E']]
+ ];
+
+ var expected_set_one = [
+    [['A'], ['B', 'C']],
+    [['C'], ['A']],
+    [['B', 'D'], ['E']]
+ ];
+
+ console.log('X:');
+ console.log(X);
+ console.log('F:');
+ console.log(F);
+
+ var bernstein_one = combine_lhs(F);
+ console.log('Testing bernstein step one...');
+ console.log('bernstein_one:');
+ test_output(bernstein_one, expected_set_one);
+ console.log(bernstein_one);
