@@ -95,9 +95,18 @@ Testing middle ground keys...
 MGKs:
 OK: Test passed
 [ 'C', 'D' ]
+X:
+[ 'A', 'B', 'C', 'D', 'E', 'G' ]
+F:
+[ [ [ 'A', 'B' ], [ 'C', 'D' ] ],
+  [ [ 'A' ], [ 'B' ] ],
+  [ [ 'B' ], [ 'C' ] ],
+  [ [ 'C' ], [ 'E' ] ],
+  [ [ 'B', 'D' ], [ 'A' ] ] ]
 Testing candidate keys...
 CK:
 OK: Test passed
 [ [ 'A', 'G' ], [ 'B', 'D', 'G' ] ]
+
 
 ```
