@@ -456,6 +456,26 @@ var candidate_keys_of = function(a_keys, kva_fds){
    return new_relations
  }
 
+var bernstein = function(a_keys, kva_fds){
+    var cks = candidate_keys_of(a_keys, kva_fds)
+    var fds = combine_lhs(kva_fds)
+    var relations = decompose_fds_to_relations(fds)
+    var no_cks = true
+    relations = remove_redundant_relations(relations)
+    for(i = 0; i < relations.length; ++i){
+        for(j = 0; j < cks.length; ++j)
+            if(cks[j].equals(relations[i])){
+                no_cks = false
+                break
+            }
+        if(no_cks == false)
+          break
+    }
+    if(no_cks)
+      relations.push(cks.shift())
+    return relations
+ }
+
 /*
   Functional Dependencies
   AB → C
@@ -755,7 +775,7 @@ test_output(bernstein_three, expected_bernstein_three);
 console.log(bernstein_three);
 
 console.log('Testing bernstein step four...');
-var bernstein_four = decompose_fds_to_relations(bernstein_one);
+var bernstein_four = bernstein(X,F);
 console.log('bernstein_four:');
 test_output(bernstein_four, expected_bernstein_four);
 console.log(bernstein_four);
