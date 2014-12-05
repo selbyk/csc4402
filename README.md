@@ -21,7 +21,7 @@ Todo
 * ~~Use combinations to generate the closure given a relation and set of functional dependencies~~
 * ~~Calculate minimal cover given a relation and set of functional dependencies~~
 * ~~Calculate candidate keys given a relation and set of functional dependencies~~
-* Berstein Algorithm to calculate 3rd normal form given a relation and set of functional dependencies
+* ~~Berstein Algorithm to calculate 3rd normal form given a relation and set of functional dependencies~~
 * BCNF Algorithm to calculate Boyce-Codd normal form given a relation and set of functional dependencies
 * Add comments before I forget what things do, rename things sanely & consistently, and clean up redundant logic
 * Actually use underscore?
