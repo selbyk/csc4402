@@ -475,7 +475,7 @@ var bcnf = function(a_keys, kva_fds){
     var result = a_keys;
     var bcnf_relations = [];
     var done = false
-    var f_plus = (a_keys, kva_fds);
+    var f_plus = fd_closure(a_keys, fds);
     while(done == false){
       done = true
       var tmp_fds = []
@@ -486,8 +486,11 @@ var bcnf = function(a_keys, kva_fds){
                 if(deeper_fdp.equals([fdp[0],result]))
                   second_check = false
             })
-            if(second_check)
+            if(second_check){
               bcnf_relations.push(fdp)
+              // causes infina loop
+              //done = false
+            }
           }
       })
     }
