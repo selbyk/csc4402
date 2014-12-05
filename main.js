@@ -432,6 +432,14 @@ var candidate_keys_of = function(a_keys, kva_fds){
    return new_fds
  }
 
+ var decompose_fds_to_relations = function(kva_fds){
+   var relations = []
+   kva_fds.forEach(function(fd){
+     relations.push(fd[0].concat(fd[1]))
+   })
+   return relations
+ }
+
 /*
   Functional Dependencies
   AB → C
@@ -690,13 +698,25 @@ Step 4.R1(ABC),R3(BDE) and R4(AD)
     [['B', 'D'], ['E']]
  ];
 
+ var expected_bernstein_two = [
+    ['A', 'B', 'C'],
+    ['C', 'A'],
+    ['B', 'D', 'E']
+ ];
+
  console.log('X:');
  console.log(X);
  console.log('F:');
  console.log(F);
 
- var bernstein_one = combine_lhs(F);
- console.log('Testing bernstein step one...');
- console.log('bernstein_one:');
- test_output(bernstein_one, expected_set_one);
- console.log(bernstein_one);
+console.log('Testing bernstein step one...');
+var bernstein_one = combine_lhs(F);
+console.log('bernstein_one:');
+test_output(bernstein_one, expected_set_one);
+console.log(bernstein_one);
+
+console.log('Testing bernstein step one...');
+var bernstein_two = decompose_fds_to_relations(bernstein_one);
+console.log('bernstein_one:');
+test_output(bernstein_two, expected_bernstein_two);
+console.log(bernstein_two);
