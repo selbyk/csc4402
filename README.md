@@ -141,8 +141,8 @@ OK: Test passed
 [ [ 'A', 'B', 'C' ], [ 'C', 'A' ], [ 'B', 'D', 'E' ] ]
 Testing bernstein step three...
 bernstein_three:
-ERROR: Test failed
-[ [ 'A', 'B', 'C' ], [ 'C', 'A' ], [ 'B', 'D', 'E' ] ]
+OK: Test passed
+[ [ 'A', 'B', 'C' ], [ 'B', 'D', 'E' ] ]
 Testing bernstein step four...
 bernstein_four:
 ERROR: Test failed
