@@ -461,6 +461,14 @@ var bernstein = function(a_keys, kva_fds){
     return relations
  }
 
+ /**
+  * BCNF Algorithm
+  */
+  var bcfn_one = function(a_keys, kva_fds){
+      var fds = combine_lhs(kva_fds)
+      return fds
+   }
+
 /*
   Functional Dependencies
   AB → C
@@ -764,3 +772,54 @@ var bernstein_four = bernstein(X,F);
 console.log('bernstein_four:');
 test_output(bernstein_four, expected_bernstein_four);
 console.log(bernstein_four);
+
+/**
+ * Tests for BCNF's Algorithm
+ */
+/*
+ Example from lecture slides
+Let R = R(ABCDEGH) and F = {B→E,B→H, E→A, E→D, AH→C}. The decomposition according
+to the given algorithm is as follows:
+*/
+
+ // Set of attributes
+ var X = ['A','B','C','D','E', 'G', 'H'];
+
+ // Set of functional dependencies
+ var F = [
+    [['B'], ['E']],
+    [['B'], ['H']],
+    [['E'], ['A']],
+    [['E'], ['D']],
+    [['A', 'H'], ['C']],
+ ];
+
+ var expected_bcnf_one = [
+    [['B'], ['E', 'H']],
+    [['E'], ['A', 'D']],
+    [['A', 'H'], ['C']]
+ ];
+
+var expected_bcnf_two = [
+   ['A', 'B', 'C'],
+   ['C', 'A'],
+   ['B', 'D', 'E']
+];
+
+
+console.log('X:');
+console.log(X);
+console.log('F:');
+console.log(F);
+
+console.log('Testing bcfn step one...');
+var bcfn_one = combine_lhs(F);
+console.log('bcfn_one:');
+test_output(bcfn_one, expected_bcnf_one);
+console.log(bcfn_one);
+
+console.log('Testing bcfn step two...');
+var bcfn_two = decompose_fds_to_relations(bcfn_one);
+console.log('bcfn_two:');
+test_output(bcfn_two, expected_bcnf_two);
+console.log(bcfn_two);
