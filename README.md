@@ -29,8 +29,31 @@ Todo
 * Find a good way to do unit testing
 * npm package?
 
-Output
----
+### Prerequisites
+
+You will need the following things properly installed on your computer.
+
+#### Git
+* [Getting Started Installing Git](http://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+
+#### Node.js
+* [How to Install Node.js](http://howtonode.org/how-to-install-nodejs)
+
+
+### Installation
+
+```bash
+$ git clone git://github.com/selbyk/csc4402.git
+$ cd csc4402
+$ npm install
+```
+
+### Running / Development
+
+* `node main.js`
+
+### Output
+
 ```sh
 Hello, World
 Hello, World
