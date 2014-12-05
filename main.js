@@ -471,23 +471,27 @@ var bcfn_one = function(a_keys, kva_fds){
  }
 
 var bcnf = function(a_keys, kva_fds){
-    var cks = candidate_keys_of(a_keys, kva_fds)
     var fds = combine_lhs(kva_fds)
-    var relations = decompose_fds_to_relations(fds)
-    var no_cks = true
-    relations = remove_redundant_relations(relations)
-    for(i = 0; i < relations.length; ++i){
-        for(j = 0; j < cks.length; ++j)
-            if(cks[j].equals(relations[i])){
-                no_cks = false
-                break
-            }
-        if(no_cks == false)
-          break
+    var result = a_keys;
+    var bcnf_relations = [];
+    var done = false
+    var f_plus = (a_keys, kva_fds);
+    while(done == false){
+      done = true
+      var tmp_fds = []
+      f_plus.forEach(function(fdp){
+          if(fdp[0].subset(fdp[1]) == false){
+            var second_check = true
+            f_plus.forEach(function(deeper_fdp){
+                if(deeper_fdp.equals([fdp[0],result]))
+                  second_check = false
+            })
+            if(second_check)
+              bcnf_relations.push(fdp)
+          }
+      })
     }
-    if(no_cks)
-      relations.push(cks.shift())
-    return relations
+    return bcnf_relations
  }
 
 /*
@@ -822,9 +826,10 @@ to the given algorithm is as follows:
  ];
 
 var expected_bcnf_two = [
-   ['A', 'B', 'C'],
-   ['C', 'A'],
-   ['B', 'D', 'E']
+   ['A', 'H', 'C'],
+   ['E', 'A', 'D'],
+   ['B', 'E', 'H'],
+   ['B', 'G']
 ];
 
 
@@ -840,7 +845,7 @@ test_output(bcfn_one, expected_bcnf_one);
 console.log(bcfn_one);
 
 console.log('Testing bcfn step two...');
-var bcfn_two = decompose_fds_to_relations(bcfn_one);
+var bcfn_two = bcnf(X,F)
 console.log('bcfn_two:');
 test_output(bcfn_two, expected_bcnf_two);
 console.log(bcfn_two);
