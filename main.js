@@ -715,8 +715,8 @@ console.log('bernstein_one:');
 test_output(bernstein_one, expected_set_one);
 console.log(bernstein_one);
 
-console.log('Testing bernstein step one...');
+console.log('Testing bernstein step two...');
 var bernstein_two = decompose_fds_to_relations(bernstein_one);
-console.log('bernstein_one:');
+console.log('bernstein_two:');
 test_output(bernstein_two, expected_bernstein_two);
 console.log(bernstein_two);

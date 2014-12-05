@@ -135,5 +135,9 @@ OK: Test passed
 [ [ [ 'A' ], [ 'B', 'C' ] ],
   [ [ 'C' ], [ 'A' ] ],
   [ [ 'B', 'D' ], [ 'E' ] ] ]
+Testing bernstein step two...
+bernstein_two:
+OK: Test passed
+[ [ 'A', 'B', 'C' ], [ 'C', 'A' ], [ 'B', 'D', 'E' ] ]
 
 ```
