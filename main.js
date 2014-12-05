@@ -464,10 +464,31 @@ var bernstein = function(a_keys, kva_fds){
  /**
   * BCNF Algorithm
   */
-  var bcfn_one = function(a_keys, kva_fds){
-      var fds = combine_lhs(kva_fds)
-      return fds
-   }
+
+var bcfn_one = function(a_keys, kva_fds){
+    var fds = combine_lhs(kva_fds)
+    return fds
+ }
+
+var bcnf = function(a_keys, kva_fds){
+    var cks = candidate_keys_of(a_keys, kva_fds)
+    var fds = combine_lhs(kva_fds)
+    var relations = decompose_fds_to_relations(fds)
+    var no_cks = true
+    relations = remove_redundant_relations(relations)
+    for(i = 0; i < relations.length; ++i){
+        for(j = 0; j < cks.length; ++j)
+            if(cks[j].equals(relations[i])){
+                no_cks = false
+                break
+            }
+        if(no_cks == false)
+          break
+    }
+    if(no_cks)
+      relations.push(cks.shift())
+    return relations
+ }
 
 /*
   Functional Dependencies
