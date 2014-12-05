@@ -698,11 +698,22 @@ Step 4.R1(ABC),R3(BDE) and R4(AD)
     [['B', 'D'], ['E']]
  ];
 
- var expected_bernstein_two = [
-    ['A', 'B', 'C'],
-    ['C', 'A'],
-    ['B', 'D', 'E']
- ];
+var expected_bernstein_two = [
+   ['A', 'B', 'C'],
+   ['C', 'A'],
+   ['B', 'D', 'E']
+];
+
+var expected_bernstein_three = [
+   ['A', 'B', 'C'],
+   ['B', 'D', 'E']
+];
+
+var expected_bernstein_four = [
+   ['A', 'B', 'C'],
+   ['B', 'D', 'E'],
+   ['A', 'D']
+];
 
  console.log('X:');
  console.log(X);
@@ -720,3 +731,15 @@ var bernstein_two = decompose_fds_to_relations(bernstein_one);
 console.log('bernstein_two:');
 test_output(bernstein_two, expected_bernstein_two);
 console.log(bernstein_two);
+
+console.log('Testing bernstein step three...');
+var bernstein_three = decompose_fds_to_relations(bernstein_one);
+console.log('bernstein_three:');
+test_output(bernstein_three, expected_bernstein_three);
+console.log(bernstein_three);
+
+console.log('Testing bernstein step four...');
+var bernstein_four = decompose_fds_to_relations(bernstein_one);
+console.log('bernstein_four:');
+test_output(bernstein_four, expected_bernstein_four);
+console.log(bernstein_four);
