@@ -82,21 +82,6 @@ Array.prototype.merge = function (that) {
     return this_and_that;
 }
 
-/*
-Your previous Plain Text content is preserved below:
-
-var _ = require('underscore');
-var crypto = require('crypto');
-
-function sayHello() {
-  console.log('Hello, World');
-}
-
-_.times(1, sayHello);
-
-
-var BreakException= {};
-
 // set of attributes
 
 /*
