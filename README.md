@@ -187,7 +187,10 @@ OK: Test passed
 Testing bcfn step two...
 bcfn_two:
 ERROR: Test failed
-[ [ 'B', 'E', 'H' ], [ 'E', 'A', 'D' ], [ 'A', 'H', 'C' ] ]
-
+[ [ [ 'B' ], [ 'E' ] ],
+  [ [ 'B' ], [ 'H' ] ],
+  [ [ 'E' ], [ 'A' ] ],
+  [ [ 'E' ], [ 'D' ] ],
+  [ [ 'A', 'H' ], [ 'C' ] ] ]
 
 ```
