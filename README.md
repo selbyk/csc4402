@@ -170,5 +170,24 @@ Testing bernstein step four...
 bernstein_four:
 OK: Test passed
 [ [ 'A', 'B', 'C' ], [ 'B', 'D', 'E' ], [ 'A', 'D' ] ]
+X:
+[ 'A', 'B', 'C', 'D', 'E', 'G', 'H' ]
+F:
+[ [ [ 'B' ], [ 'E' ] ],
+  [ [ 'B' ], [ 'H' ] ],
+  [ [ 'E' ], [ 'A' ] ],
+  [ [ 'E' ], [ 'D' ] ],
+  [ [ 'A', 'H' ], [ 'C' ] ] ]
+Testing bcfn step one...
+bcfn_one:
+OK: Test passed
+[ [ [ 'B' ], [ 'E', 'H' ] ],
+  [ [ 'E' ], [ 'A', 'D' ] ],
+  [ [ 'A', 'H' ], [ 'C' ] ] ]
+Testing bcfn step two...
+bcfn_two:
+ERROR: Test failed
+[ [ 'B', 'E', 'H' ], [ 'E', 'A', 'D' ], [ 'A', 'H', 'C' ] ]
+
 
 ```
