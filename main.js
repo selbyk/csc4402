@@ -38,10 +38,10 @@ Array.prototype.proper_subset = function (array) {
         return false;
 
     // compare lengths - can save a lot of time
-    if (this.length == 0 || array.length == 0 || this.length < array.length)
+    if (array.length >= this.length)
         return false;
 
-    for (var i = 0, l=array.length; i < l; i++) {
+    for (var i = 0; i<array.length; ++i) {
       if(this.indexOf(array[i]) == -1) {
         return false;
       }
@@ -56,11 +56,29 @@ Array.prototype.subset = function (array) {
         return false;
 
     // compare lengths - can save a lot of time
-    if (this.length == 0 || array.length == 0 || this.length <= array.length)
+    if (array.length > this.length)
         return false;
 
-    for (var i = 0, l=array.length; i < l; i++) {
+    for (var i = 0; i<array.length; ++i) {
       if(this.indexOf(array[i]) == -1) {
+        return false;
+      }
+    }
+    return true;
+}
+
+// attach the .equals method to Array's prototype to call it on any array
+Array.prototype.is_subset_of = function (array) {
+    // if the other array is a falsy value, return
+    if (!array)
+        return false;
+
+    // compare lengths - can save a lot of time
+    if (this.length > array.length)
+        return false;
+
+    for (var i = 0; i<this.length; ++i) {
+      if(array.indexOf(this[i]) == -1) {
         return false;
       }
     }
@@ -429,8 +447,9 @@ var candidate_keys_of = function(a_keys, kva_fds){
    var new_relations = []
    relations.forEach(function(relation){
      var is_redundant = false;
-     for(i = 0; i < relations.length; ++i){
-       if(relations[i].subset(relation)){
+     for(i = 0; i < new_relations.length; ++i){
+       if(new_relations[i].subset(relation)){
+         //console.log(relation, ' subset? ', new_relations[i])
          is_redundant = true
          break
        }
