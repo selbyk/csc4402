@@ -54,7 +54,7 @@ $ npm install
 
 ### Output
 
-```sh
+```
 Hello, World
 Hello, World
 Hello, World
