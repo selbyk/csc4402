@@ -86,6 +86,23 @@ Array.prototype.is_subset_of = function (array) {
 }
 
 // attach the .equals method to Array's prototype to call it on any array
+Array.prototype.includes_fd = function (element) {
+    // if the other array is a falsy value, return
+    if (!element)
+        return false;
+
+    // compare lengths - can save a lot of time
+    if (element instanceof Array){
+      for (var i = 0; i < this.length; ++i) {
+        if(this[i] instanceof Array && this[i][0].equals(element[0]) && element[1].is_subset_of(this[i][1])) {
+          return true;
+        }
+      }
+    }
+    return false;
+}
+
+// attach the .equals method to Array's prototype to call it on any array
 Array.prototype.merge = function (that) {
     var this_index = 0;
     var that_index = 0;
@@ -493,28 +510,43 @@ var bcnf = function(a_keys, kva_fds){
     var fds = combine_lhs(kva_fds)
     var result = a_keys;
     var bcnf_relations = [];
-    var done = false
+
     var f_plus = fd_closure(a_keys, fds);
-    while(done == false){
-      done = true
-      var tmp_fds = []
-      f_plus.forEach(function(fdp){
-          if(fdp[0].subset(fdp[1]) == false){
-            var second_check = true
-            f_plus.forEach(function(deeper_fdp){
-                if(deeper_fdp.equals([fdp[0],result]))
-                  second_check = false
-            })
-            if(second_check){
-              bcnf_relations.push(fdp)
-              // causes infina loop
-              //done = false
+
+    console.log(f_plus);
+
+    var recursive_bcnf = function(a_keys, kva_fds){
+        var tmp_fds = []
+        var nontrivial_fd = false;
+
+        for(i = 0; i < f_plus.length; ++i){
+          if(!f_plus[i][1].is_subset_of(f_plus[i][0])){
+            console.log(f_plus[i], ' is not trivial')
+            for(j = 0; j < kva_fds.length; ++j){
+              if(kva_fds[j][0].equals(f_plus[i][0]) ){
+                console.log(f_plus[i], ' it holds on Ri');
+                break;
+              }
             }
           }
-      })
-    }
-    return bcnf_relations
+        }
+
+        /*for(i = 0; i < kva_fds.length; ++i){
+          if(!kva_fds[i][1].is_subset_of(kva_fds[i][0])){
+            console.log(kva_fds[i], ' is not trivial lol');
+            if(!f_plus.includes_fd([kva_fds[i][0], a_keys])){
+              console.log([kva_fds[i][0], a_keys], ' isnt in ');
+              tmp_fds.push(kva_fds[i])
+            }
+          }
+        }*/
+        return tmp_fds
+     }
+
+    return recursive_bcnf(result, fds);
  }
+
+
 
 /*
   Functional Dependencies
